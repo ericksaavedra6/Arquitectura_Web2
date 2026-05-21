@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "internal/infrastructure/grpc/pb;pb";
+
+message Producto {
+  string id = 1;
+  string nombre = 2;
+  string descripcion = 3;
+  double precio = 4;
+}
+
+message ProductId {
+  string id = 1;
+}
+
+message ProductosList {
+  repeated Producto items = 1;
+}
+
+message Empty {}
+
+service ProductService {
+  rpc Create(Producto) returns (Producto);
+  rpc Get(ProductId) returns (Producto);
+  rpc Update(Producto) returns (Producto);
+  rpc Delete(ProductId) returns (Producto);
+  rpc List(Empty) returns (ProductosList);
+}
