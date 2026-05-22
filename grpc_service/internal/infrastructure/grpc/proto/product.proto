@@ -5,14 +5,14 @@ package product;
 option go_package = "internal/infrastructure/grpc/pb;pb";
 
 message Producto {
-  string id = 1;
+  int64 id = 1;
   string nombre = 2;
   string descripcion = 3;
   double precio = 4;
 }
 
 message ProductId {
-  string id = 1;
+  int64 id = 1;
 }
 
 message ProductosList {

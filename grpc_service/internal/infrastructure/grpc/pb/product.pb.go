@@ -23,7 +23,7 @@ const (
 
 type Producto struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	Nombre        string                 `protobuf:"bytes,2,opt,name=nombre,proto3" json:"nombre,omitempty"`
 	Descripcion   string                 `protobuf:"bytes,3,opt,name=descripcion,proto3" json:"descripcion,omitempty"`
 	Precio        float64                `protobuf:"fixed64,4,opt,name=precio,proto3" json:"precio,omitempty"`
@@ -61,11 +61,11 @@ func (*Producto) Descriptor() ([]byte, []int) {
 	return file_internal_infrastructure_grpc_proto_product_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Producto) GetId() string {
+func (x *Producto) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return 0
 }
 
 func (x *Producto) GetNombre() string {
@@ -91,7 +91,7 @@ func (x *Producto) GetPrecio() float64 {
 
 type ProductId struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -126,11 +126,11 @@ func (*ProductId) Descriptor() ([]byte, []int) {
 	return file_internal_infrastructure_grpc_proto_product_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ProductId) GetId() string {
+func (x *ProductId) GetId() int64 {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return 0
 }
 
 type ProductosList struct {
@@ -219,12 +219,12 @@ const file_internal_infrastructure_grpc_proto_product_proto_rawDesc = "" +
 	"\n" +
 	"0internal/infrastructure/grpc/proto/product.proto\x12\aproduct\"l\n" +
 	"\bProducto\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x16\n" +
 	"\x06nombre\x18\x02 \x01(\tR\x06nombre\x12 \n" +
 	"\vdescripcion\x18\x03 \x01(\tR\vdescripcion\x12\x16\n" +
 	"\x06precio\x18\x04 \x01(\x01R\x06precio\"\x1b\n" +
 	"\tProductId\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"8\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"8\n" +
 	"\rProductosList\x12'\n" +
 	"\x05items\x18\x01 \x03(\v2\x11.product.ProductoR\x05items\"\a\n" +
 	"\x05Empty2\xff\x01\n" +
