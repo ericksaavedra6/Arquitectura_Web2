@@ -1,0 +1,25 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+# Definición del tipo Producto que el cliente puede consultar
+type Producto {
+    id: ID!
+    nombre: String!
+    descripcion: String!
+    precio: Float!
+}
+
+# Todas las operaciones de lectura (CRUD: Read / List)
+type Query {
+    get(id: ID!): Producto
+    list: [Producto!]!
+}
+
+# Todas las operaciones que modifican datos (CRUD: Create, Update, Delete)
+type Mutation {
+    create(nombre: String!, descripcion: String!, precio: Float!): Producto!
+    update(id: ID!, nombre: String!, descripcion: String!, precio: Float!): Producto
+    delete(id: ID!): Producto
+}

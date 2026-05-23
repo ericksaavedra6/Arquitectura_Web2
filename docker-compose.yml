@@ -1,0 +1,54 @@
+services:
+  # --- CONTENEDOR DE LA BASE DE DATOS (POSTGRESQL) ---
+  postgres_db:
+    image: postgres:15-alpine
+    container_name: postgres_inventarios
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: inventarios
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # El healthcheck verifica internamente cada 3 segundos si Postgres ya acepta conexiones
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d inventarios"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  # --- MICROSERVICIO gRPC ---
+  api-grpc:
+    container_name: api-grpc-container
+    build:
+      context: ./grpc_service       # Tu carpeta real del proyecto gRPC
+      dockerfile: Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      # Apunta al nombre del contenedor de la BD (postgres_inventarios)
+      - DATABASE_URL=host=postgres_inventarios user=admin password=root dbname=inventarios port=5432 sslmode=disable TimeZone=America/Bogota
+    # CRUCIAL: No arranca hasta que el healthcheck de postgres_db esté en verde (healthy)
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
+  # --- MICROSERVICIO GRAPHQL ---
+  api-graph:
+    container_name: api-graph-container
+    build:
+      context: ./graph_service      # Tu carpeta real del proyecto GraphQL
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      # Apunta al nombre del contenedor de la BD (postgres_inventarios)
+      - DATABASE_URL=host=postgres_inventarios user=admin password=root dbname=inventarios port=5432 sslmode=disable TimeZone=America/Bogota
+    # CRUCIAL: No arranca hasta que el healthcheck de postgres_db esté en verde (healthy)
+    depends_on:
+      postgres_db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

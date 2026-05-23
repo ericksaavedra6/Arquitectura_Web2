@@ -17,7 +17,7 @@ import (
 func main() {
 	// 1. Definir la cadena de conexión (DSN) para PostgreSQL
 	// Reemplaza estos valores con tus credenciales locales o las de Render / Supabase
-	dsn := "host=localhost user=admin password=root dbname=inventarios port=5432 sslmode=disable TimeZone=America/Bogota"
+	dsn := "host=postgres_db user=admin password=root dbname=inventarios port=5432 sslmode=disable TimeZone=America/Bogota"
 
 	// Inicializar la Base de Datos con el ORM (GORM)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
